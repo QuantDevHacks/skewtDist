@@ -4,8 +4,8 @@ Title: Asymmetric Student t-distributions
 Version: 0.3.0
 Author: Zhiye Xia
 Maintainer: Zhiye Xia <dansummer94@gmail.com>
-Description: Methods and Applications for AST and GAT distributions
-License: What license is it under?
+Description: This package is is a collection of methods and applications for AST and GAT distributions.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/dan9401/st
