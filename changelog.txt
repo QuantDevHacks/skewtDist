@@ -1,0 +1,10 @@
+1. kept data/ , but have to confirm with Doug whether it can be published
+2. removed etc/ , mostly irrelevant
+3. removed plots/ , mostly irrelevant as well
+4. in R/ , deleted all gat-*.R files; in man/ , deleted all gat-*.Rd; in test/testthat/ , deleted all test-gat-*.R
+5. vignette/ is untouched for now, as Doug may want to add some finishing touch
+6. edited DESCRIPTION, removed gat, needs double checking
+7. leaving NAMESPACE untouched, let roxygen2 does the job
+8. removing all.Rout and .RDataTmp, hardly matters
+9. keeping README.md for now
+10. repurpose sink-example.txt as change log
