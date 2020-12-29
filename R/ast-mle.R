@@ -45,9 +45,9 @@
 #' summary(fit)
 #' moments(fit)
 #' fitted(fit)
-#' se(fit)
-#' objective(fit)
-#' plot(fit)
+#' fit$standard_errors
+#' fit$objective
+#' plot(fit, type = "density")
 
 #' @rdname astMLE
 #' @export

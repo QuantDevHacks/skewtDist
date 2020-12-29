@@ -4,24 +4,35 @@
 \alias{ast-methods}
 \alias{summary.ast}
 \alias{moments.ast}
+\alias{plots.ast}
 \alias{print.ast}
 \alias{plot.ast}
 \title{Methods for ast class}
 \usage{
-\method{summary}{ast}(fit)
+\method{summary}{ast}(object, ...)
 
-\method{moments}{ast}(fit, method = c("analytical", "numerical"))
+\method{moments}{ast}(x, method = c("analytical", "numerical"), ...)
 
-\method{print}{ast}(fit)
+\method{print}{ast}(x, ...)
 
-plot.ast(fit, type = NULL, dist = "ast", envelope = 0.95, ...)
+\method{plot}{ast}(x, y = NULL, type = NULL, dist = "ast", envelope = 0.95, ...)
 }
 \arguments{
-\item{fit}{A AST fit object of class \code{\link{ast}}}
+\item{object}{A AST fit object of class \code{\link{ast}}}
+
+\item{...}{additional arguments passed to the underlying method}
+
+\item{x}{A AST fit object of class \code{\link{ast}}}
 
 \item{method}{one of "numerical" and "analytical", calculating the moments using numerical integration / analytical formula}
 
+\item{y}{not used}
+
 \item{type}{one of "density" and "QQplot"}
+
+\item{dist}{the distribution (either normal or ast)}
+
+\item{envelope}{confidence interval}
 }
 \description{
 Methods for ast S3 class
@@ -36,5 +47,5 @@ solver_control <- list(eval.max = 10^3, iter.max = 10^3)
 fit <- astMLE(data, solver = 'nlminb', solver_control = solver_control)
 summary(fit)
 moments(fit)
-plot(fit)
+plot(fit, type = "density")
 }

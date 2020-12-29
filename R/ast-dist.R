@@ -36,7 +36,10 @@
 #'     The left tail parameter \code{nu1} only affects the left half(0th to \eqn{\alpha}-th percentile) of the distribution,
 #'     while the right tail paramter \code{nu2} only affects the right half(\eqn{\alpha}-th to 100-th percentile) of the distribution.
 #' }
-#'
+#' @importFrom graphics abline hist lines points
+#' @importFrom stats cov2cor dnorm nlminb ppoints pt qnorm qt quantile rt runif
+#' @importFrom utils menu
+#' @importFrom DistributionUtils safeIntegrate
 #' @references
 #' Zhu, D., & Galbraith, J. W. (2010). A generalized asymmetric Student-t distribution with application to financial econometrics. Journal of Econometrics, 157(2), 297-305.\url{https://www.sciencedirect.com/science/article/pii/S0304407610000266}
 #' \url{https://econpapers.repec.org/paper/circirwor/2009s-13.htm}

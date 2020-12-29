@@ -2,9 +2,14 @@
 #'
 #' @description Methods for ast S3 class
 #'
-#' @param fit A AST fit object of class \code{\link{ast}}
+#' @param object A AST fit object of class \code{\link{ast}}
+#' @param x A AST fit object of class \code{\link{ast}}
 #' @param method one of "numerical" and "analytical", calculating the moments using numerical integration / analytical formula
 #' @param type one of "density" and "QQplot"
+#' @param y not used
+#' @param dist the distribution (either normal or ast)
+#' @param envelope confidence interval
+#' @param ... additional arguments passed to the underlying method
 #'
 #' @details should also add the empirical moments
 #'
@@ -20,69 +25,69 @@
 #' fit <- astMLE(data, solver = 'nlminb', solver_control = solver_control)
 #' summary(fit)
 #' moments(fit)
-#' plot(fit)
+#' plot(fit, type = "density")
 
 #' @rdname ast-methods
 #' @export
-summary.ast <- function(fit) {
-  dist <- ifelse(fit$symmetric == TRUE, "SST", "AST")
-  pars <- rbind(fit$start_pars, fit$fixed_pars)
-  res <- rbind(fit$fitted_pars, fit$standard_errors)
-  colnames(pars) <- colnames(res) <- names(fit$fitted_pars)
+summary.ast <- function(object, ...) {
+  dist <- ifelse(object$symmetric == TRUE, "SST", "AST")
+  pars <- rbind(object$start_pars, object$fixed_pars)
+  res <- rbind(object$fitted_pars, object$standard_errors)
+  colnames(pars) <- colnames(res) <- names(object$fitted_pars)
   rownames(pars) <- c("start_pars", "fixed_pars")
   rownames(res) <- c("fitted_pars", "standard_errors")
 
   cat("Distribution: ", dist, "\n")
-  cat("Observations: ", length(fit$data), "\n")
+  cat("Observations: ", length(object$data), "\n")
   cat("\nResult:\n")
   print(res)
-  cat("\nLog-likelihood", fit$objective)
-  cat("\n\nSolver: ", fit$solver)
+  cat("\nLog-likelihood", object$objective)
+  cat("\n\nSolver: ", object$solver)
   cat("\n\n")
   print(pars)
-  cat("\nTime elapsed: ", fit$time_elapsed)
-  cat("\nConvergence Message: ", fit$message)
+  cat("\nTime elapsed: ", object$time_elapsed)
+  cat("\nConvergence Message: ", object$message)
 }
 
 #' @rdname ast-methods
 #' @export
-moments.ast <- function(fit, method = c("analytical", "numerical")) {
-  pars <- fit$fitted_pars
+moments.ast <- function(x, method = c("analytical", "numerical"), ...) {
+  pars <- x$fitted_pars
   astMoments(pars = pars, method)
 }
 
 #' @rdname ast-methods
 #' @export
-print.ast <- function(fit) {
-  dist <- ifelse(fit$symmetric == TRUE, "SST", "AST")
-  res <- rbind(fit$fitted_pars, fit$standard_errors)
-  colnames(res) <- names(fit$fitted_pars)
+print.ast <- function(x, ...) {
+  dist <- ifelse(x$symmetric == TRUE, "SST", "AST")
+  res <- rbind(x$fitted_pars, x$standard_errors)
+  colnames(res) <- names(x$fitted_pars)
   rownames(res) <- c("fitted_pars", "standard_errors")
 
   cat("Distrifitbution: ", dist, "\n")
-  cat("Observations: ", length(fit$data), "\n")
+  cat("Observations: ", length(x$data), "\n")
   cat("\nResult:\n")
   print(res)
 }
 
 #' @rdname ast-methods
 #' @export
-plot.ast <- function(fit, type = NULL, dist = "ast", envelope = 0.95, ...) {
+plot.ast <- function(x, y = NULL, type = NULL, dist = "ast", envelope = 0.95, ...) {
   if (is.null(type)) {
     selection <- 1
     while (selection) {
       selection <- menu(c("Density", "qqplot"), title = "Make a plot selection (or 0 to exit)")
       if (selection == 1) {
-        density_ast(fit, ...)
+        density_ast(x, ...)
       } else if(selection == 2) {
-        qqplot_ast(fit, dist, envelope = 0.95, ...)
+        qqplot_ast(x, dist, envelope = 0.95, ...)
       }
     }
   } else {
     if (type == "density") {
-      density_ast(fit, ...)
+      density_ast(x, ...)
     } else if(type == "qqplot") {
-      qqplot_ast(fit, dist = dist, envelope = envelope, ...)
+      qqplot_ast(x, dist = dist, envelope = envelope, ...)
     }
   }
 }
